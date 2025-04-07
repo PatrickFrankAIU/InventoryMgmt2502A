@@ -172,7 +172,8 @@ function addOrder() {
         product.quantity -= quantityInput;
     } else {
 
-    // RAY  WE SHOULD DO MORE THAN DISPLAY THE NEAGATIVE QUANTITY. PERHAPS ADD ALERT.
+    // RAY  WE SHOULD DO MORE THAN DISPLAY THE NEAGATIVE QUANTITY. PERHAPS ADD ALERT. PERHAPS PREVENT: ORDERS > SHIPMENTS.
+
 
         category.products.push({product: productInput, quantity: -quantityInput});
     }
@@ -193,6 +194,7 @@ function addOrder() {
     displayInventory();
     displayOrder();
 }
+
 
 function displayOrder() {
     let orderDisplay = document.getElementById('orderDisplay');

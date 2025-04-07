@@ -11,3 +11,10 @@ https://github.com/PatrickFrankAIU/InventoryMgmt2501A
 
 Here's an image showing the completed page without CSS: 
 ![image](https://github.com/user-attachments/assets/7df5e498-9b7c-40e0-888d-7ab86f6b1481)
+
+RAY'S CODE EDITS
+HTML:
+line 19-delete: id='removeMe' It's not used in JS.
+
+JS:
+I PUT MY NOTES IN THE MAIN.JS FILE. IT'S HARD TO REFERENCE THEM ALL HERE.
