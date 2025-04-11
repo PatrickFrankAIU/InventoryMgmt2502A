@@ -1,4 +1,5 @@
 // array that holds the inventory data
+// when the page is refreshed it doesn't save changes to updated products either in quantity or any newly added categories
 let inventory = [
     {
         category: 'Fruits',
@@ -21,8 +22,15 @@ let inventory = [
 // global variables
 // rename instances of category to "productCategory"
 // rename instances of productMenu to "productsMenu"
-let categoryMenu = document.getElementById('categoryInput');
-let productMenu = document.getElementById('productInput');
+const categoryMenu = document.getElementById('categoryInput');
+const productMenu = document.getElementById('productInput');
+const inventoryDisplay = document.getElementById('inventoryDisplay');
+const shipmentDisplay = document.getElementById('shipmentDisplay');
+const orderDisplay = document.getElementById('orderDisplay');
+const newCategoryInput = document.getElementById('newCategoryInput');
+const quantityInput = document.getElementById('quantityInput');
+
+// arrays delcared to hold shipment and order data
 let shipment = [];
 let order = [];
 
@@ -83,7 +91,8 @@ function addNewCategory() {
             products: []
         });
         // the code below adds the new category to the category dropdown list
-        // from a user perspective, they may think of the product first and category 2nd. Change this to add a new product and then prompt them to add to an existing category or add the new product under a new category 
+        // from a user perspective, they may think of the product first and category 2nd. Change this to add a new product and then prompt them to add to an existing category or add the new product under a new category
+        // input should only accept letters 
         let categoryOption = document.createElement('option');
         categoryOption.value = newCategoryInput;
         categoryOption.textContent = newCategoryInput;
@@ -102,6 +111,7 @@ function addShipment() {
         // make quantityInput a global value and replace instances of quantityInput with quantityInput.value
         // quantityInput must also accept positive whole numbers as well and display an error message to provide a number if a number is not the input
         // if the user doesn't alter the quantity, nan will output to inventory, order total, and shipment total
+        // if a large number is used it will display an odd output that is hard to read
     let categoryInput = document.getElementById('categoryInput').value;
     let productInput = document.getElementById('productInput').value;
     let quantityInput = parseInt(document.getElementById('quantityInput').value); // for qty
