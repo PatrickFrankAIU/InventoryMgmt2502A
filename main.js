@@ -38,7 +38,7 @@ let order = [];
 function displayInventory() {
 
     // get inventory display HTML element and store it in a variable
-    let inventoryDisplay = inventoryDisplay.value
+    
     inventoryDisplay.innerHTML = '';
 
     // iterate through inventory and create HTML to display
@@ -85,6 +85,7 @@ categoryMenu.addEventListener('change', createProducts);
 function addNewCategory() {
     // this function adds a new category to the inventory (but not products)
     let newCategoryInput = newCategoryInput.value;
+
     if (newCategoryInput) {
         inventory.push({
             category: newCategoryInput,
@@ -157,7 +158,7 @@ function addShipment() {
 // there is no method to remove or cancel shipments
 // differentiate categories in the output through color or other display method
 function displayShipment() {
-    let shipmentDisplay = shipmentDisplay.value;
+    
     shipmentDisplay.innerHTML = '';
     shipment.forEach(category => {
         let categoryEl = document.createElement('div');
@@ -196,6 +197,7 @@ function addOrder() {
     } else { //replace with a createNewProduct function
         // category.products.push({ product: productInput, quantity: -quantityInput });
         alert("Not enough stock to complete order")
+        return;
     }
 
     let orderCategory = order.find(cat => cat.category === categoryInput);
@@ -217,7 +219,7 @@ function addOrder() {
 
 // does the same thing as displayShipment but in a different div that shows under "Orders"
 function displayOrder() {
-    let orderDisplay = orderDisplay.value;
+    
     orderDisplay.innerHTML = '';
     order.forEach(category => {
         let categoryEl = document.createElement('div');
