@@ -22,3 +22,11 @@ const shipmentDisplay = document.getElementById('shipmentDisplay');
 const orderDisplay = document.getElementById('orderDisplay');
 const newCategoryInput = document.getElementById('newCategoryInput');
 const quantityInput = document.getElementById('quantityInput');
+
+V1.1
+
+-added min and max to quantity input in html (doesn't work yet)
+-added pattern to new category input in html (doesn't work yet)
+-added check to javascript for quantity input to check if a positive number is added and to alert if not
+-added check to javascript to check if sufficient quantities are available in inventory when an order amount is entered and to alert if the stock is insufficient to prevent negative product quantities
+-shortened functions that had getElementById with the corresponding global variables

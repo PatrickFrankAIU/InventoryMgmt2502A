@@ -38,7 +38,7 @@ let order = [];
 function displayInventory() {
 
     // get inventory display HTML element and store it in a variable
-    let inventoryDisplay = document.getElementById('inventoryDisplay');
+    let inventoryDisplay = inventoryDisplay.value
     inventoryDisplay.innerHTML = '';
 
     // iterate through inventory and create HTML to display
@@ -84,7 +84,7 @@ categoryMenu.addEventListener('change', createProducts);
 
 function addNewCategory() {
     // this function adds a new category to the inventory (but not products)
-    let newCategoryInput = document.getElementById('newCategoryInput').value;
+    let newCategoryInput = newCategoryInput.value;
     if (newCategoryInput) {
         inventory.push({
             category: newCategoryInput,
@@ -112,9 +112,10 @@ function addShipment() {
         // quantityInput must also accept positive whole numbers as well and display an error message to provide a number if a number is not the input
         // if the user doesn't alter the quantity, nan will output to inventory, order total, and shipment total
         // if a large number is used it will display an odd output that is hard to read
-    let categoryInput = document.getElementById('categoryInput').value;
-    let productInput = document.getElementById('productInput').value;
-    let quantityInput = parseInt(document.getElementById('quantityInput').value); // for qty
+        // quantity can be added without selecting a category with the numbers showing up after a colon
+    let categoryInput = categoryInput.value;
+    let productInput = productInput.value;
+    let quantityInput = parseInt(quantityInput.value); // for qty
 
     // this searches the inventory array to ensure the object has a category property that matches the categoryInput. If found it returns it to the category variable. 
     let category = inventory.find(cat => cat.category === categoryInput);
@@ -131,7 +132,7 @@ function addShipment() {
     } else {
         // may be redundant if adding product is done in another function. or if this is still used, modify with 
         // quantity: quantityInput instead
-        category.products.push({ product: productInput, quantity, quantityInput });
+        category.products.push({ product: productInput, quantity: quantityInput });
     }
       // this searches the shipment array to ensure the object has a category property that matches the categoryInput. If found it returns it to the category variable. 
     let shipCategory = shipment.find(cat => cat.category === categoryInput);
@@ -156,7 +157,7 @@ function addShipment() {
 // there is no method to remove or cancel shipments
 // differentiate categories in the output through color or other display method
 function displayShipment() {
-    let shipmentDisplay = document.getElementById('shipmentDisplay');
+    let shipmentDisplay = shipmentDisplay.value;
     shipmentDisplay.innerHTML = '';
     shipment.forEach(category => {
         let categoryEl = document.createElement('div');
@@ -173,9 +174,14 @@ function displayShipment() {
 // if there is nothing selected in the category dropdown, it adds a NAN under fruits category
 function addOrder() {
     // make these global variables
-    let categoryInput = document.getElementById('categoryInput').value;
-    let productInput = document.getElementById('productInput').value;
-    let quantityInput = parseInt(document.getElementById('quantityInput').value);
+    let categoryInput = categoryInput.value;
+    let productInput = productInput.value;
+    let quantityInput = parseInt(quantityInput.value);
+
+    // checks if a number greater than zero is entered
+    if (isNaN(quantityInput) || quantityInput <= 0) {
+        alert("Please enter a positive number")
+    };
 
     // the code here does that same thing as addShipment but with effects to the order array instead
     let category = inventory.find(cat => cat.category === categoryInput);
@@ -183,11 +189,13 @@ function addOrder() {
         category = { category: categoryInput, products: [] };
     }
 
+    // added check for if quantity input is higher than amount of product so inventory doesn't go negative
     let product = category.products.find(prod => prod.product === productInput);
-    if (product) {
+    if (product && product.quantity >= quantityInput) {
         product.quantity -= quantityInput;
     } else { //replace with a createNewProduct function
-        category.products.push({ product: productInput, quantity: -quantityInput });
+        // category.products.push({ product: productInput, quantity: -quantityInput });
+        alert("Not enough stock to complete order")
     }
 
     let orderCategory = order.find(cat => cat.category === categoryInput);
@@ -209,7 +217,7 @@ function addOrder() {
 
 // does the same thing as displayShipment but in a different div that shows under "Orders"
 function displayOrder() {
-    let orderDisplay = document.getElementById('orderDisplay');
+    let orderDisplay = orderDisplay.value;
     orderDisplay.innerHTML = '';
     order.forEach(category => {
         let categoryEl = document.createElement('div');
