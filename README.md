@@ -30,3 +30,11 @@ V1.1
 -added check to javascript for quantity input to check if a positive number is added and to alert if not
 -added check to javascript to check if sufficient quantities are available in inventory when an order amount is entered and to alert if the stock is insufficient to prevent negative product quantities
 -shortened functions that had getElementById with the corresponding global variables
+
+v1.2
+
+-added check to make sure a positive number is added for both add shipment and add order
+-renamed let selectedCategory = categoryInput.value;
+    let selectedProduct = productInput.value;
+    let quantity = parseInt(quantityInput.value);
+so that drop downs and functions would work properly while preserving global variables

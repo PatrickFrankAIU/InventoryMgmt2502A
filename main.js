@@ -84,19 +84,19 @@ categoryMenu.addEventListener('change', createProducts);
 
 function addNewCategory() {
     // this function adds a new category to the inventory (but not products)
-    let newCategoryInput = newCategoryInput.value;
+    let newCategoryValue = newCategoryInput.value.trim();
 
-    if (newCategoryInput) {
+    if (newCategoryValue) {
         inventory.push({
-            category: newCategoryInput,
+            category: newCategoryValue,
             products: []
         });
         // the code below adds the new category to the category dropdown list
         // from a user perspective, they may think of the product first and category 2nd. Change this to add a new product and then prompt them to add to an existing category or add the new product under a new category
         // input should only accept letters 
         let categoryOption = document.createElement('option');
-        categoryOption.value = newCategoryInput;
-        categoryOption.textContent = newCategoryInput;
+        categoryOption.value = newCategoryValue;
+        categoryOption.textContent = newCategoryValue;
         categoryMenu.appendChild(categoryOption);
         document.getElementById('newCategoryInput').value = '';
         displayInventory();
@@ -114,40 +114,44 @@ function addShipment() {
         // if the user doesn't alter the quantity, nan will output to inventory, order total, and shipment total
         // if a large number is used it will display an odd output that is hard to read
         // quantity can be added without selecting a category with the numbers showing up after a colon
-    let categoryInput = categoryInput.value;
-    let productInput = productInput.value;
-    let quantityInput = parseInt(quantityInput.value); // for qty
+    let selectedCategory = categoryInput.value;
+    let selectedProduct = productInput.value;
+    let quantity = parseInt(quantityInput.value); // for qty
+
+    if (isNaN(quantity) || quantity <= 0) {
+        alert("Please enter a positive number")
+    };
 
     // this searches the inventory array to ensure the object has a category property that matches the categoryInput. If found it returns it to the category variable. 
-    let category = inventory.find(cat => cat.category === categoryInput);
+    let category = inventory.find(cat => cat.category === selectedCategory);
     // this appears to provide a way to add a new category if it's not found but we already have this fuction separately and isn't possible to do through the dropdown.
     if (!category) { // check: Why is this "not"? 
-        category = { category: categoryInput, products: [] };
+        category = { category: selectedCategory, products: [] };
         inventory.push(category);
     }
 
     // this searches the products array to ensure the object has a category property that matches the productInput and if it does,lets you add the amount of product the user specifies through quantityInput
-    let product = category.products.find(prod => prod.product === productInput);
+    let product = category.products.find(prod => prod.product === selectedProduct);
     if (product) {
-        product.quantity += quantityInput;
+        product.quantity += quantity;
     } else {
         // may be redundant if adding product is done in another function. or if this is still used, modify with 
         // quantity: quantityInput instead
-        category.products.push({ product: productInput, quantity: quantityInput });
+        category.products.push({ product: selectedProduct, quantity: quantity });
     }
       // this searches the shipment array to ensure the object has a category property that matches the categoryInput. If found it returns it to the category variable. 
-    let shipCategory = shipment.find(cat => cat.category === categoryInput);
+    let shipCategory = shipment.find(cat => cat.category === selectedCategory);
     if (!shipCategory) { // if the category isn't found it creates a new category object and adds it (may be redundant)
-        shipCategory = { category: categoryInput, products: [] };
+        shipCategory = { category: selectedCategory, products: [] };
         shipment.push(shipCategory);
     }
 
       // this searches the products array to ensure the object has a product property that matches the productInput and if it does,lets you add the amount of product the user specifies through quantityInput that affects the shipment array
-    let shipProduct = shipCategory.products.find(prod => prod.product === productInput);
+    let shipProduct = shipCategory.products.find(prod => prod.product === selectedProduct);
     if (shipProduct) {
-        shipProduct.quantity += quantityInput;
+        shipProduct.quantity += quantity;
     } else {
-        shipCategory.products.push({ product: productInput, quantity: quantityInput });
+        shipCategory.products.push({ product: selectedProduct, quantity: quantity });
     }
 
     displayInventory();
@@ -175,42 +179,42 @@ function displayShipment() {
 // if there is nothing selected in the category dropdown, it adds a NAN under fruits category
 function addOrder() {
     // make these global variables
-    let categoryInput = categoryInput.value;
-    let productInput = productInput.value;
-    let quantityInput = parseInt(quantityInput.value);
+    let selectedCategory = categoryInput.value;
+    let selectedProduct = productInput.value;
+    let quantity = parseInt(quantityInput.value); // for qty
 
     // checks if a number greater than zero is entered
-    if (isNaN(quantityInput) || quantityInput <= 0) {
+    if (isNaN(quantity) || quantity <= 0) {
         alert("Please enter a positive number")
     };
 
     // the code here does that same thing as addShipment but with effects to the order array instead
-    let category = inventory.find(cat => cat.category === categoryInput);
+    let category = inventory.find(cat => cat.category === selectedCategory);
     if (!category) { //replace with a createNewProduct function
-        category = { category: categoryInput, products: [] };
+        category = { category: selectedCategory, products: [] };
     }
 
     // added check for if quantity input is higher than amount of product so inventory doesn't go negative
-    let product = category.products.find(prod => prod.product === productInput);
-    if (product && product.quantity >= quantityInput) {
-        product.quantity -= quantityInput;
+    let product = category.products.find(prod => prod.product === selectedProduct);
+    if (product && product.quantity >= quantity) {
+        product.quantity -= quantity;
     } else { //replace with a createNewProduct function
         // category.products.push({ product: productInput, quantity: -quantityInput });
         alert("Not enough stock to complete order")
         return;
     }
 
-    let orderCategory = order.find(cat => cat.category === categoryInput);
+    let orderCategory = order.find(cat => cat.category === selectedCategory);
     if (!orderCategory) { //replace with a createNewProduct function
-        orderCategory = { category: categoryInput, products: [] };
+        orderCategory = { category: selectedCategory, products: [] };
         order.push(orderCategory);
     }
 
-    let orderProduct = orderCategory.products.find(prod => prod.product === productInput);
+    let orderProduct = orderCategory.products.find(prod => prod.product === selectedProduct);
     if (orderProduct) {
-        orderProduct.quantity += quantityInput;
+        orderProduct.quantity += quantity;
     } else { //replace with a createNewProduct function
-        orderCategory.products.push({ product: productInput, quantity: quantityInput });
+        orderCategory.products.push({ product: selectedProduct, quantity: quantity });
     }
 
     displayInventory();
