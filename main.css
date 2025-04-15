@@ -1,25 +1,6 @@
 /* styles.css */
 /* This is just some basic formatting to get us started. */
 
-/* --------------- MY SUGGESTIONS --------------- */
-
-/* 1. Added spacing/padding/margin for headings, inputs, dropdowns, buttons. Everything is too crammed together
-2. Change "Add shipment" to "Restock Items"
-3. Change "Add order" to "Ship Order"
-4. Break out "Restock Items" and "Ship Order" into their own categories and have them side by side with their titles about. duplicating the input and dropdowns but having the associated buttons only under the associated title
-5. Separate out defined areas like: Restock Items, Ship Order, Total inventory, total restock and shipments. Do this using fieldsets/borders
-6. Include an "Add new Product" button or method to add it and ensure it must be placed under a category
-7. Adding new categories and products may not be used often. Maybe find a way to do with within the drop down menu?
-8. Make quantity more visually associated with product. (directly underneath)
-9. Resize the inventory div that displays the information so it doesn't take up so much space and can allow for a better arrangement.
-10. Rename "Inventory" to "Total Inventory" or "Current Inventory" or "Available Items" 
-11. make a placeholder or a way to hide "please select a category after the category dropdown is selected
-12. Rename "Category" to "Product Categories" and "Product" to "Products*/
-
-
-
-
-
 /* Body styles */
 body {
     font-family: Arial, sans-serif;
